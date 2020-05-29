@@ -25,7 +25,7 @@ Exclude third\_party BUILD files
 ```ylm
 uses: thompsonja/bazel-buildifier@0.3.0
 with:
-  excludes: third_party/*
+  excludes: ./third_party/*
 ```
 
 Only consider BUILD and .bzl files
