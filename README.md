@@ -1,4 +1,4 @@
-# cpplint
+# buildifier
 
 GitHub Workflow Action to run buildifier on bazel files
 
@@ -15,7 +15,7 @@ all warnings.
 Simple example, use all buildifier warnings
 
 ```ylm
-uses: thompsonja/bazel-buildifier@0.2.0
+uses: thompsonja/bazel-buildifier@0.2.1
 with:
   warnings: all
 ```
@@ -23,7 +23,7 @@ with:
 Exclude third\_party BUILD files
 
 ```ylm
-uses: thompsonja/bazel-buildifier@0.2.0
+uses: thompsonja/bazel-buildifier@0.2.1
 with:
   excludes: third_party/*
 ```
@@ -31,7 +31,7 @@ with:
 Only consider BUILD and .bzl files
 
 ```ylm
-uses: thompsonja/bazel-buildifier@0.2.0
+uses: thompsonja/bazel-buildifier@0.2.1
 with:
   filetypes: BUILD,bzl
 ```
