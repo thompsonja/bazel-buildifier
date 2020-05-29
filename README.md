@@ -10,16 +10,12 @@ Optional Inputs:
 By default, buildifier excludes some warnings, so use `warnings: all` to include
 all warnings.
 
-The buildifier tool also does some basic autoformatting which is not surfaced as
-a lint warning. Therefore this action does not currently fail if this
-autoformatting occurs.
-
 ## Examples
 
 Simple example, use all buildifier warnings
 
 ```ylm
-uses: thompsonja/bazel-buildifier@0.1.0
+uses: thompsonja/bazel-buildifier@0.2.0
 with:
   warnings: all
 ```
@@ -27,7 +23,7 @@ with:
 Exclude third\_party BUILD files
 
 ```ylm
-uses: thompsonja/bazel-buildifier@0.1.0
+uses: thompsonja/bazel-buildifier@0.2.0
 with:
   excludes: third_party/*
 ```
@@ -35,7 +31,7 @@ with:
 Only consider BUILD and .bzl files
 
 ```ylm
-uses: thompsonja/bazel-buildifier@0.1.0
+uses: thompsonja/bazel-buildifier@0.2.0
 with:
   filetypes: BUILD,bzl
 ```

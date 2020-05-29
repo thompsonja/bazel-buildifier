@@ -1,7 +1,18 @@
 #!/bin/bash -eu
 
+declare -a BUILDIFIER_ARGS=(
+  "--lint=warn"
+  "--mode=check"
+)
+if [[ -n "${INPUT_WARNINGS:-""}" ]]; then
+  BUILDIFIER_ARGS+=("--warnings=${INPUT_WARNINGS}")
+fi
+readonly BUILDIFIER_ARGS
+
+# If defaults are used for filetypes and excludes, just do a recursive check.
 if [[ -z "${INPUT_FILETYPES:-""}" && -z "${INPUT_EXCLUDES:-""}" ]]; then
-  buildifier --lint=warn -r .
+  set -x
+  buildifier "${BUILDIFIER_ARGS[@]}" -r .
   exit 0
 fi
 
@@ -10,12 +21,14 @@ IFS=',' read -r -a FILETYPES <<< \
   "${INPUT_FILETYPES:-"BUILD,bzl,sky,bzl,WORKSPACE,bazel"}"
 readonly FILETYPES
 
+# Generate find args for filetypes using -iname
 declare FIND_NAME_ARGS
 FIND_NAME_ARGS="$(printf -- "-iname %s -o " "${FILETYPES[@]}")"
 # Remove the last ' -o ' 4 characters, they are only needed in between args
 FIND_NAME_ARGS="${FIND_NAME_ARGS::-4}"
 readonly FIND_NAME_ARGS
 
+# Generate find args for any path exclusions using '-not -path'
 declare FIND_PATH_EXCLUDES
 if [[ -n "${INPUT_EXCLUDES:-""}" ]]; then
   declare EXCLUDES=()
@@ -26,18 +39,11 @@ if [[ -n "${INPUT_EXCLUDES:-""}" ]]; then
 fi
 readonly FIND_PATH_EXCLUDES
 
+# Construct our full find command to get the bazel files we want to pass to
+# buildifier
 declare -a BAZEL_FILES
 BAZEL_FILES=($(find . -type f \( ${FIND_NAME_ARGS} \) ${FIND_PATH_EXCLUDES}))
 readonly BAZEL_FILES
 
-declare -a BUILDIFIER_ARGS=(
-  "--lint=warn"
-  "${BAZEL_FILES[@]}"
-)
-if [[ -n "${INPUT_WARNINGS:-""}" ]]; then
-  BUILDIFIER_ARGS=("--warnings=${INPUT_WARNINGS}" "${BUILDIFIER_ARGS[@]}")
-fi
-readonly BUILDIFIER_ARGS
-
 set -x
-buildifier "${BUILDIFIER_ARGS[@]}"
+buildifier "${BUILDIFIER_ARGS[@]}" "${BAZEL_FILES[@]}"
