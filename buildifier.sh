@@ -42,7 +42,8 @@ readonly FIND_PATH_EXCLUDES
 # Construct our full find command to get the bazel files we want to pass to
 # buildifier
 declare -a BAZEL_FILES
-BAZEL_FILES=($(find . -type f \( ${FIND_NAME_ARGS} \) ${FIND_PATH_EXCLUDES}))
+BAZEL_FILES=(\
+  $(eval "find . -type f \( ${FIND_NAME_ARGS} \) ${FIND_PATH_EXCLUDES}"))
 readonly BAZEL_FILES
 
 set -x
