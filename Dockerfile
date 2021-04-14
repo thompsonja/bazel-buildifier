@@ -1,6 +1,6 @@
-FROM alpine:3.11
+FROM alpine:3.13
 
-ARG BUILDIFIER_VERSION="3.0.0"
+ARG BUILDIFIER_VERSION="4.0.1"
 
 COPY buildifier.sh /buildifier.sh
 
