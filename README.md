@@ -15,7 +15,7 @@ all warnings.
 Simple example, use all buildifier warnings
 
 ```ylm
-uses: thompsonja/bazel-buildifier@v0.2.1
+uses: thompsonja/bazel-buildifier@v0.3.0
 with:
   warnings: all
 ```
@@ -23,7 +23,7 @@ with:
 Exclude third\_party BUILD files
 
 ```ylm
-uses: thompsonja/bazel-buildifier@v0.2.1
+uses: thompsonja/bazel-buildifier@v0.3.0
 with:
   excludes: ./third_party/*
 ```
@@ -31,7 +31,7 @@ with:
 Only consider BUILD and .bzl files
 
 ```ylm
-uses: thompsonja/bazel-buildifier@v0.2.1
+uses: thompsonja/bazel-buildifier@v0.3.0
 with:
   filetypes: BUILD,bzl
 ```
