@@ -1,4 +1,16 @@
-#!/bin/bash -eu
+#!/bin/bash
+
+set -eu
+
+# Install buildifier
+if ! curl -f -L -o /usr/bin/buildifier \
+  "https://github.com/bazelbuild/buildtools/releases/download/${INPUT_BUILDIFIER_VERSION}/buildifier-linux-amd64"; then
+  echo "Could not download buildifier ${INPUT_BUILDIFIER_VERSION}"
+  exit 1
+fi
+chmod +x /usr/bin/buildifier
+
+buildifier --version
 
 declare -a BUILDIFIER_ARGS=(
   "--lint=warn"
@@ -48,3 +60,5 @@ readonly BAZEL_FILES
 
 set -x
 buildifier "${BUILDIFIER_ARGS[@]}" "${BAZEL_FILES[@]}"
+set +x
+echo "Success!"
